@@ -4,9 +4,8 @@ package com.ranjith.quizapp.controller;
 import com.ranjith.quizapp.Questions;
 import com.ranjith.quizapp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +17,27 @@ public class QuestionController
     @Autowired
     QuestionService questionsService;
     @GetMapping("allQuestions")
-    public List<Questions> getAllQuestions()
+    public ResponseEntity<List<Questions>> getAllQuestions()
     {
         return questionsService.getAllQuestions();
+    }
+
+    @GetMapping("category/{category}")
+    public ResponseEntity<List<Questions>> getQuestionsByCategory(@PathVariable String category)
+    {
+        return questionsService.getQuestionsByCategory(category);
+    }
+
+    @PostMapping("add")
+    public ResponseEntity<String> addQuestion(@RequestBody Questions question)
+    {
+        return questionsService.addQuestion(question);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteQuestion(@PathVariable Integer id)
+    {
+        return questionsService.deleteQuestion(id);
     }
 
 }

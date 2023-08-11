@@ -3,17 +3,61 @@ package com.ranjith.quizapp.service;
 import com.ranjith.quizapp.Questions;
 import com.ranjith.quizapp.dao.QuestionDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
     @Autowired
     QuestionDao questionDao;
-    public List<Questions>getAllQuestions()
-    {
-        return questionDao.findAll();
+    public ResponseEntity<List<Questions>>getAllQuestions() {
+        try {
+            return new ResponseEntity<>(questionDao.findAll(), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+           e.printStackTrace();
+        }
+        return new ResponseEntity<>(questionDao.findAll(), HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<List<Questions>> getQuestionsByCategory(String category) {
+        try {
+            return new ResponseEntity<>(questionDao.findByCategory(category),HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(questionDao.findByCategory(category),HttpStatus.BAD_REQUEST);
+
+    }
+
+    public ResponseEntity<String> addQuestion(Questions question) {
+        try {
+            questionDao.save(question);
+            return new ResponseEntity<>("Success", HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Failed to Save", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    public ResponseEntity<String> deleteQuestion(Integer id) {
+        try {
+            questionDao.deleteAllById(Collections.singleton(id));
+            return new ResponseEntity<>("Success",HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Failed to Delete",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

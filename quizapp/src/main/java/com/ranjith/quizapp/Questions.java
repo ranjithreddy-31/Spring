@@ -11,5 +11,6 @@ public class Questions {
     int id;
     String question;
     String answer;
+    String category;
 
 }
