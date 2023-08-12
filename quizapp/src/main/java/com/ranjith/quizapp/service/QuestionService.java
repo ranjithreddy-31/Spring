@@ -1,17 +1,15 @@
 package com.ranjith.quizapp.service;
 
-import com.ranjith.quizapp.Questions;
+import com.ranjith.quizapp.model.Questions;
 import com.ranjith.quizapp.dao.QuestionDao;
+import com.ranjith.quizapp.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class QuestionService {

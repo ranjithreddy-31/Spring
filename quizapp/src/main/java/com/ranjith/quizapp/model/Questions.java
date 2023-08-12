@@ -1,4 +1,4 @@
-package com.ranjith.quizapp;
+package com.ranjith.quizapp.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
